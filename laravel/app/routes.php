@@ -17,3 +17,4 @@
 // });
 
 Route::get('/', 'PagesController@index');
+Route::get('/users', "UsersController@index");
