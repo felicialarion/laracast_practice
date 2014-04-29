@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+// Route::get('/', function()
+// {	$name = 'My test';
+// 	return View::make('hello')->with('name', $name);
+// });
+
+Route::get('/', 'PagesController@index');
