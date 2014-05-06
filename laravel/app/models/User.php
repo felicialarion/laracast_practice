@@ -7,6 +7,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public $timestamps = false;
 	public $fillable = ['username', 'password'];
+
+	public static $rules = [
+		'username'=>'required',
+		'password' =>'required'
+	];
+
+	public static $errors;
 	/**
 	 * The database table used by the model.
 	 *
@@ -80,6 +87,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function getReminderEmail()
 	{
 		return $this->email;
+	}
+
+	public function isValid(){
+		$validation = Validator::make($this->attributes, static::$rules);
+		if($validation->passes()) return true;
+		$this->errors = $validation->messages();
+		return false;
 	}
 
 }

@@ -1,6 +1,11 @@
 <?php 
 class UsersController extends BaseController{
 
+	protected $user;
+
+	public function __construct(User $user){
+		$this->user = $user;
+	}
 	public function index(){
 		$users = array();
 		//create new user using Eloquent
@@ -23,8 +28,39 @@ class UsersController extends BaseController{
 
 		
 		$users = User::all();
-		
-		return $users;
-		//return View::make('users.index')->with('users', $users);
+		return View::make('users.index')->with('users', $users);
+		}
+
+		public function show($username){
+			
+			$user = User::whereUsername($username)->first();
+			return View::make('users.show', array('user'=>$user));
+		}
+
+		public function create(){
+			return View::make('users.create');
+		}
+		public function store(){
+			// Input::all();
+			//$validation = Validator::make(Input::all(), array('username'=>'required', 'password'=>'required'));
+			// $validation = Validator::make(Input::all(), User::$rules);
+			
+			// if($validation->fails()){
+			// 	return Redirect::back()->withInput()->withErrors($validation->messages());
+			// }
+			$input = Input::all();
+			if(!$this->user->fill($input)->isValid() ){
+
+				return Redirect::back()->withInput()->withErrors($this->user->errors);
+			}
+			$this->user->save();
+			// $user = new User();
+			// $user->username = Input::get('username');
+			// $user->password = Hash::make(Input::get('password'));
+			// $user->save();
+
+			//return Redirect::to('users');
+			return Redirect::route('users.index');
+
+		}
 	}
-}

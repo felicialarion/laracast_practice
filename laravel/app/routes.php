@@ -16,5 +16,9 @@
 // 	return View::make('hello')->with('name', $name);
 // });
 
+
+
+Route::resource('users', 'UsersController');
 Route::get('/', 'PagesController@index');
-Route::get('/users', "UsersController@index");
+// Route::get('/users', "UsersController@index");
+// Route::get('/users/{username}', "UsersController@show");

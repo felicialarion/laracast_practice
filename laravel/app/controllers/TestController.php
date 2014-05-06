@@ -1,4 +1,5 @@
-<?php class TestController extends BaseController{
+<?php 
+class TestController extends BaseController{
 	
 
 }
